@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenginx
+  namespace: default
+  labels:
+    app: kubenginx
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubenginx
+  template:
+    metadata:
+      labels:
+        app: kubenginx
+    spec:
+      containers:
+      - name: kubenginx
+        image: stacksimplify/kubenginx:1.0.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
