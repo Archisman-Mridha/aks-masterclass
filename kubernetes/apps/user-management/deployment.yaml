@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+  namespace: default
+  labels:
+    app: user-management
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management
+
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      initContainers:
+        # Assure that MySQL database is up first.
+        # Only then start the user-management application container.
+        - name: mysql-availability-checker
+          image: busybox:1.31
+          command: ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done;"]
+      containers:
+        - name: user-management
+          image: stacksimplify/kube-usermgmt-webapp:1.0.0-MySQLDB
+          resources:
+            limits:
+              memory: 500Mi
+              cpu: 500m
+          env:
+            - name: DB_HOSTNAME
+              value: mysql
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: users
+            - name: DB_USERNAME
+              value: root
+            - name: DB_PASSWORD
+              value: password
+          ports:
+            - containerPort: 8080
