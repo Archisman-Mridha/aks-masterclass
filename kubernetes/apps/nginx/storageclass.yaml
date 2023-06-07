@@ -1,0 +1,20 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  # Azure by default already has created a StorageClass named "azurefile" for connecting with Azure
+  # File Shares (Standard LRS tier).
+  name: azurefile-custom
+
+provisioner: kubernetes.io/azure-file
+
+# Dynamically provisioned PVs of this StorageClass are created with these mount options.
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=0
+  - gid=0
+  - mfsymlinks
+  - cache=strict
+
+parameters:
+  skuName: Standard_LRS

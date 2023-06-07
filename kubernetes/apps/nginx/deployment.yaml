@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    app: nginx
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+
+  # Pod specification.
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: nginx
+          persistentVolumeClaim:
+            claimName: nginx
+      containers:
+        - name: nginx
+          image: stacksimplify/kube-nginxapp1:1.0.0
+          resources:
+            limits:
+              memory: 120Mi
+              cpu: 100m
+          volumeMounts:
+            - name: nginx
+              mountPath: /usr/share/nginx/html/app1
+          ports:
+            - containerPort: 80

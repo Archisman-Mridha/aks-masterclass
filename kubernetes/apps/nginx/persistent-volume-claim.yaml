@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx
+  namespace: default
+  labels:
+    app: nginx
+
+spec:
+  storageClassName: azurefile-custom
+  resources:
+    requests:
+      storage: 100Mi
+  accessModes:
+    - ReadWriteMany

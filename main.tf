@@ -25,3 +25,7 @@ provider "azurerm" {
 
   demo_azure_sql_server_admin_password = var.demo_azure_sql_server_admin_password
 } */
+
+/* module "azure-file-shares" {
+  source = "./modules/azure-file-shares"
+} */
