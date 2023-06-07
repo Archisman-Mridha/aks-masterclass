@@ -38,6 +38,9 @@ spec:
           env:
             - name: DB_PORT
               value: "3306"
+
+            # TODO: In case of using Azure managed MySQL server, create a Kubernetes Job which will
+            # create this database inside the server.
             - name: DB_NAME
               value: users
 
@@ -49,7 +52,7 @@ spec:
             # - name: DB_PASSWORD
             #   value: password
 
-            # For using AZure managed MySQL server
+            # For using Azure managed MySQL server
             - name: DB_HOSTNAME
               value: azure-mysql
             - name: DB_USERNAME

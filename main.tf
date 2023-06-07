@@ -16,3 +16,7 @@ provider "azurerm" {
 
   features { }
 }
+
+/* module "azure-mysql-server" {
+  source = "./modules/azure-mysql-server"
+} */
