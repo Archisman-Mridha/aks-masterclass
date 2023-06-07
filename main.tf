@@ -19,4 +19,9 @@ provider "azurerm" {
 
 /* module "azure-mysql-server" {
   source = "./modules/azure-mysql-server"
+
+  resource_group_name = azurerm_resource_group.this.name
+  location = azurerm_resource_group.this.location
+
+  demo_azure_sql_server_admin_password = var.demo_azure_sql_server_admin_password
 } */

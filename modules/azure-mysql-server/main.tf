@@ -1,8 +1,8 @@
 resource "azurerm_mysql_server" "this" {
   name = "archi-demoserver-aksmasterclass"
 
-  resource_group_name = azurerm_resource_group.this.name
-  location = azurerm_resource_group.this.location
+  resource_group_name = var.resource_group_name
+  location = var.location
 
   version = "5.7"
 
@@ -21,7 +21,7 @@ resource "azurerm_mysql_server" "this" {
 resource "azurerm_mysql_firewall_rule" "azure_services" {
   name = "AzureServices"
 
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = var.resource_group_name
 
   server_name = azurerm_mysql_server.this.name
 
