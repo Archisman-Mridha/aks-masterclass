@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-mysql
+  labels:
+    app: mysql
+
+spec:
+  type: ExternalName
+  # Kubernetes will figure out the port number (3306).
+  externalName: archi-demoserver-aksmasterclass.mysql.database.azure.com
