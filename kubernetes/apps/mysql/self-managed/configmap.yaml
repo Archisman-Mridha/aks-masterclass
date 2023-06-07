@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: users-db-creator
+  namespace: default
+  labels:
+    app: mysql
+
+data:
+  create_users_db.sql: |-
+    DROP DATABASE IF EXISTS users;
+    CREATE DATABASE users;
