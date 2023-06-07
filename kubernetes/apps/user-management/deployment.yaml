@@ -22,7 +22,12 @@ spec:
         # Only then start the user-management application container.
         - name: mysql-availability-checker
           image: busybox:1.31
-          command: ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done;"]
+
+          # For using the self-managed MySQL server deployed inside the cluster
+          # command: ["sh", "-c", "while ! nc -z mysql 3306; do sleep 1; done;"]
+
+          # For using AZure managed MySQL server
+          command: ["sh", "-c", "while ! nc -z azure-mysql 3306; do sleep 1; done;"]
       containers:
         - name: user-management
           image: stacksimplify/kube-usermgmt-webapp:1.0.0-MySQLDB
@@ -31,15 +36,29 @@ spec:
               memory: 500Mi
               cpu: 500m
           env:
-            - name: DB_HOSTNAME
-              value: mysql
             - name: DB_PORT
               value: "3306"
             - name: DB_NAME
               value: users
+
+            # For using the self-managed MySQL server deployed inside the cluster
+            # - name: DB_HOSTNAME
+            #   value: mysql
+            # - name: DB_USERNAME
+            #   value: root
+            # - name: DB_PASSWORD
+            #   value: password
+
+            # For using AZure managed MySQL server
+            - name: DB_HOSTNAME
+              value: azure-mysql
             - name: DB_USERNAME
-              value: root
+              value: dbadmin
             - name: DB_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: azure-mysql-password
+                  key: password
+
           ports:
             - containerPort: 8080

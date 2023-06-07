@@ -17,3 +17,15 @@ resource "azurerm_mysql_server" "this" {
   ssl_enforcement_enabled = false
   ssl_minimal_tls_version_enforced = "TLSEnforcementDisabled"
 }
+
+resource "azurerm_mysql_firewall_rule" "azure_services" {
+  name = "AzureServices"
+
+  resource_group_name = azurerm_resource_group.this.name
+
+  server_name = azurerm_mysql_server.this.name
+
+  // This allows Azure services to access the MySQL server.
+  start_ip_address = "0.0.0.0"
+  end_ip_address = "0.0.0.0"
+}
