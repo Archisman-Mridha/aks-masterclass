@@ -1,0 +1,24 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: default-with-retention
+
+provisioner: kubernetes.io/azure-disk
+# While creating the AKS cluster, Azure creates some default StorageClasses for us (like default, managed-premium,
+# azurefile etc.). Reclaim policy for these StorageClasses is "delete" (when we delete a PV, the underlying Azure
+# Disk will also be deleted).
+#! Delete the retained Azure disks from Azure portal.
+reclaimPolicy: Retain
+# Binding of a PVC to a PV will wait until the first Pod referencing the PVC is scheduled. This mode is useful when
+# you want to dynamically provision the PV only when it's needed by a specific Pod.
+# Benefit - The Azure Disk will be created in the same zone where the application will be deployed, thus reducing
+# latency.
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+
+parameters:
+  # In production scenarios, we use "Premium_LRS" (Premium Locally Redundant Storage).
+  # It indicates that the underlying storage resource provisioned for the PV will be of premium performance
+  # and durability.
+  storageaccounttype: Standard_LRS
+  kind: managed
