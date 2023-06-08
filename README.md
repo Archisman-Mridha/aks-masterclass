@@ -8,7 +8,7 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
 
 - An **Azure disk cannot be mounted to multiple pods at the same time**. But in case of **a file residing in Azure File Shares** it is possible. By default, in the AKS cluster, 2 StorageClasses are created - *`azurefile`* (uses Standard LRS) and *`azurefile-premium`* (uses Premium LRS). If you want to use some other Azure File Shares tier (like Standard GRS, Standard ZRS), then you can create a custom StorageClass.
 
-- Run these commands to install NGINX ingress controller inside the AKS cluster -
+- Run these commands to **install** *`NGINX ingress controller`* inside the AKS cluster -
   ```bash
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx &&
     helm repo add stable https://charts.helm.sh/stable
@@ -22,3 +22,7 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
   # Check status of the installation
   kubectl --namespace default get services -o wide -w ingress-nginx-controller
   ```
+
+- A **domain** (for example - google.com) **is a unique name in the Domain Name system**. **With a domain, multiple DNS records** (like mail.google.com, drive.google.com etc.) **can be associated**. A *`DNS Zone`* **keeps track of all these DNS records associated with that domain**.
+
+  > Azure doesn't have any service using which we can buy domains (**it isn't a domain registrar**), but **it can host DNS Zones for our existing domains**.
