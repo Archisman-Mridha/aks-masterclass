@@ -1,0 +1,14 @@
+# You can view the available options here -
+# https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+
+controller:
+  replicaCount: 1
+  nodeSelector:
+    kubernetes.io/os: linux
+  service:
+    externalTrafficPolicy: Local # Preserve source IP
+    loadBalancerIP: "4.188.239.51" # TODO: change to whatever the public IP is.
+
+defaultBackend:
+  nodeSelector:
+    kubernetes.io/os: linux
