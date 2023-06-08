@@ -10,22 +10,23 @@ spec:
   defaultBackend:
     service:
       name: nginx
-      port: 
+      port:
         number: 80
   rules:
-    - http:
+    - host: aks-masterclass.projectsofarchi.live
+      http:
         paths:
           - pathType: Exact
             path: /whoami
             backend:
               service:
                 name: whoami
-                port: 
+                port:
                   number: 80
           # - pathType: Prefix
           #   path: /nginx
           #   backend:
           #     service:
           #       name: nginx
-          #       port: 
+          #       port:
           #         number: 80

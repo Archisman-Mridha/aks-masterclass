@@ -1,0 +1,11 @@
+{
+  "tenantId": "",
+  "subscriptionId": "",
+
+  "resourceGroup": "main", 
+
+  "useManagedIdentityExtension": true,
+  // Client ID of the user managed identity which represents the external DNS
+  // running inside the AKS cluster.
+  "userAssignedIdentityID": ""
+}

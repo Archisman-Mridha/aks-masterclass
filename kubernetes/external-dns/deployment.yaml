@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: default
+  labels:
+    app: external-dns
+
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: k8s.gcr.io/external-dns/external-dns:v0.11.0
+          resources:
+            limits:
+              memory: 120Mi
+              cpu: 100m
+          volumeMounts:
+            - name: azure-dns-config
+              mountPath: /etc/kubernetes
+              readOnly: true
+          args:
+            - --source=service
+            - --source=ingress
+            #- --domain-filter=example.com # (optional) limit to only example.com domains; change to match the zone created above.
+            - --provider=azure
+          #- --azure-resource-group=externaldns # (optional) use the DNS zones from the specific resource group
+      volumes:
+        - name: azure-dns-config
+          secret:
+            secretName: azure-dns-config

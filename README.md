@@ -26,3 +26,13 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
 - A **domain** (for example - google.com) **is a unique name in the Domain Name system**. **With a domain, multiple DNS records** (like mail.google.com, drive.google.com etc.) **can be associated**. A *`DNS Zone`* **keeps track of all these DNS records associated with that domain**.
 
   > Azure doesn't have any service using which we can buy domains (**it isn't a domain registrar**), but **it can host DNS Zones for our existing domains**.
+
+- *`Kubernetes External DNS`* - DNS records are automatically created (in the DNS Zone) when we mention them in the Ingress hostname.
+
+  You can explore it more here - https://github.com/kubernetes-sigs/external-dns.
+
+  Command to **create the Kubernetes secret containing Azure DNS config** (which is required by external DNS) -
+  ```bash
+  kubectl create secret generic azure-dns-config \
+    --from-file ./kubernetes/external-dns/azure-dns.config.json
+  ```
