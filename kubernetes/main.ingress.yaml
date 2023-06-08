@@ -7,6 +7,11 @@ metadata:
     kubernetes.io/ingress.class: nginx
 
 spec:
+  defaultBackend:
+    service:
+      name: nginx
+      port: 
+        number: 80
   rules:
     - http:
         paths:
@@ -17,10 +22,10 @@ spec:
                 name: whoami
                 port: 
                   number: 80
-          - pathType: Prefix
-            path: /
-            backend:
-              service:
-                name: nginx
-                port: 
-                  number: 80
+          # - pathType: Prefix
+          #   path: /nginx
+          #   backend:
+          #     service:
+          #       name: nginx
+          #       port: 
+          #         number: 80
