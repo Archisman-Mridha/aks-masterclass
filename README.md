@@ -17,10 +17,10 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
   helm install \
     -f ./kubernetes/helm/ingress-nginx.values.yaml \
     ingress-nginx ingress-nginx/ingress-nginx \
-    --namespace default
+    --create-namespace --namespace ingress-nginx
 
   # Check status of the installation
-  kubectl --namespace default get services -o wide -w ingress-nginx-controller
+  kubectl --namespace ingress-nginx get services -o wide -w ingress-nginx-controller
   ```
 
 - A **domain** (for example - google.com) **is a unique name in the Domain Name system**. **With a domain, multiple DNS records** (like mail.google.com, drive.google.com etc.) **can be associated**. A *`DNS Zone`* **keeps track of all these DNS records associated with that domain**.
@@ -35,4 +35,16 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
   ```bash
   kubectl create secret generic azure-dns-config \
     --from-file ./kubernetes/external-dns/azure-dns.config.json
+  ```
+
+- *`Cert Manager`* is a **native Kubernetes certificate management controller**. It can help with issuing certificates from a variety of sources such as Let's Encrypt, Hashicorp Vault etc. It will **ensure that TLS certificates are up to date** and if not then **it will try to renew those certificates before expiry**.
+
+  You can read more about Cert-Manager here - https://cert-manager.io/docs
+
+  Command used to install Cert Manager -
+  ```bash
+  # TODO: Understand why this is done.
+  kubectl label namespace ingress-nginx cert-manager.io/disable-validation=true
+
+  kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
   ```
