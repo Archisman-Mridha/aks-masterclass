@@ -48,3 +48,18 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
 
   kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml
   ```
+
+- *`Cluster Autoscaler`* -
+
+  To test the Horizontal node autoscaler, you can use these commands -
+  ```bash
+  kubectl apply -f ./kubernetes/apps/whoami/deployment.yaml
+
+  # Scale up the whoami application to 100 replicas.
+  # The number of nodes will also be scaled up automatically.
+  kubectl scale --replicas=100 deploy whoami
+
+  # Scale down the whoami application to 1 replica.
+  # The number of nodes will also be scaled down automatically.
+  kubectl scale --replicas=1 deploy whoami
+  ```

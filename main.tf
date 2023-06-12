@@ -4,6 +4,11 @@ terraform {
   backend "local" { }
 
   required_providers {
+    tls = {
+      source = "hashicorp/tls"
+      version = "4.0.4"
+    }
+
     azurerm = {
       source = "hashicorp/azurerm"
       version = "3.59.0"
@@ -17,15 +22,19 @@ provider "azurerm" {
   features { }
 }
 
-/* module "azure-mysql-server" {
+/*
+module "azure-mysql-server" {
   source = "./modules/azure-mysql-server"
 
   resource_group_name = azurerm_resource_group.this.name
   location = azurerm_resource_group.this.location
 
   demo_azure_sql_server_admin_password = var.demo_azure_sql_server_admin_password
-} */
+}
+*/
 
-/* module "azure-file-shares" {
+/*
+module "azure-file-shares" {
   source = "./modules/azure-file-shares"
-} */
+}
+*/
