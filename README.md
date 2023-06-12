@@ -63,3 +63,9 @@ AKS (Azure Kubernetes Service) is highly available, secure and fully managed Kub
   # The number of nodes will also be scaled down automatically.
   kubectl scale --replicas=1 deploy whoami
   ```
+
+  Since **metric-server is installed by default in case of AKS** (unlike EKS), we can get started directly with Horizontal Pod Autoscaling. Run this command, to generate load for the whoami application pods and see them autoscale -
+  ```
+  kubectl run apache-bench -i --tty --rm --image=httpd -- ab -n 500000 -c 10000 http://whoami.default.svc.cluster.local/
+  ```
+  **The default scaledown period in case of HPA is 5 minutes**. Even if the load decreases, the pods will not scaledown before 5 minutes.

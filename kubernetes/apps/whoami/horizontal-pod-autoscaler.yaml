@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: whoami
+  namespace: default
+  labels:
+    app: whoami
+
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: whoami
+
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          # If the CPU utilization of that 1 pod exceeds by 80%, then scale up the number of
+          # pods (maximum limit is 3).
+          averageUtilization: 80
